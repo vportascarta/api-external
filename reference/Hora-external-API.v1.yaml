@@ -153,7 +153,6 @@ paths:
       operationId: get-schedule
       security:
         - 'Bearer <api_key>': []
-      requestBody: {}
       parameters:
         - schema:
             type: string
@@ -197,12 +196,6 @@ paths:
               schema:
                 type: string
                 description: The error encountered by the server
-        '':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/requirement'
-          description: ''
       operationId: get-requirement
       security:
         - 'Bearer <api_key>': []
@@ -225,7 +218,7 @@ components:
       title: Employee
       type: object
       x-examples: {}
-      description: ''
+      description: All information about an employee
       x-tags:
         - employee
       properties:
@@ -237,41 +230,49 @@ components:
           description: Id displayed on screen
         firstName:
           type: string
-          description: ''
+          description: First name of the employee
         lastName:
           type: string
-          description: ''
+          description: Last name of the employee
         hiringDate:
           type: string
           format: date-time
-          description: ISO Date Time
+          description: Date when the employee was hired (ISO Date Time)
         seniorityDate:
           type: string
           format: date-time
-          description: ISO Date Time
+          description: Date of seniority for the system automatic algorithm (ISO Date Time)
         gender:
           type: string
           enum:
             - M
             - F
-          description: ''
+          description: Gender of the employee
         status:
           type: string
+          description: Status of the employee
         affiliation:
           type: string
+          description: Affiliation of the employee
         baseDivision:
           type: string
+          description: Base division (use to restrict admin views) of the employee
         address:
           type: string
+          description: Adress of the employee
         homePhone:
           type: string
+          description: Home or Work phone (internationnal format)
         cellularPhone:
           type: string
+          description: Cellular phone (internationnal format)
         email:
           type: string
           format: email
+          description: Email of the employee
         information:
           type: string
+          description: Other information about the employee
         externalId:
           type: string
           description: Id used with external systems
@@ -279,20 +280,24 @@ components:
           type: array
           items:
             type: string
+          description: List of skills that the employee have
         labels:
           type: array
           items:
             type: string
+          description: List of labels that the employee have
         wageType:
           type: string
           enum:
             - HOURLY
             - WEEKLY
+          description: Unit of the wage
         wage:
           type: number
-          example: '40'
+          example: 40
           minimum: 0
           maximum: 1000000
+          description: Wage of the employee
       required:
         - id
         - displayId
@@ -305,35 +310,46 @@ components:
       properties:
         onSchedule:
           type: number
-          example: '2'
+          example: 2
           minimum: 0
           maximum: 1000
+          description: Number of ressources already on schedule
         required:
           type: number
-          example: '6'
+          example: 6
           minimum: 0
           maximum: 1000
+          description: Number of ressources required for this period
       required:
         - onSchedule
         - required
+      description: 'A "need" is a number of ressources needed in a period of time'
     shift:
       title: Shift
       type: object
+      x-tags:
+        - schedule
       properties:
         division:
           type: string
+          description: Division of the shift
         affectation:
           type: string
+          description: Affectation of the shift
         source:
           type: string
+          description: Source of the shift (used to know the origin of the shift)
         start:
           type: string
           format: date-time
+          description: Start of the shift (ISO Date Time)
         end:
           type: string
           format: date-time
+          description: End of the shift (ISO Date Time)
         tasks:
           type: array
+          description: Tasks linked to the shift
           items:
             $ref: '#/components/schemas/task'
       required:
@@ -341,8 +357,6 @@ components:
         - affectation
         - start
         - end
-      x-tags:
-        - schedule
     task:
       title: Task
       type: object
@@ -351,65 +365,76 @@ components:
       properties:
         name:
           type: string
+          description: Name of the task
         start:
           type: string
           format: date-time
+          description: Start of the task (ISO Date Time)
         end:
           type: string
           format: date-time
+          description: Start of the task (ISO Date Time)
         duration:
           type: number
-          description: milliseconds
-          example: '15'
+          description: Duration of the task in milliseconds
+          example: 15
           minimum: 0
           maximum: 86400000
         labels:
           type: array
+          description: List of labels linked to the task
           items:
             type: string
     schedule:
       title: Schedule
       type: object
+      x-tags:
+        - schedule
+      description: A schedule of an employee
       properties:
         employeeId:
           type: string
+          description: Id of the employee
         shifts:
           type: array
+          description: All the shifts for this employee
           items:
             $ref: '#/components/schemas/shift'
-      x-tags:
-        - schedule
     requirement:
       title: Requirement
       type: object
-      description: ''
+      description: Discribe a requirement for one day
       x-tags:
         - requirement
       properties:
-        discretization:
-          type: number
-          description: millisseconds
-          example: '30'
-          minimum: 0
-          maximum: 86400000
         start:
           type: string
           format: date-time
+          description: Start date of the requirement
+        discretization:
+          type: number
+          description: Duration of one period in milliseconds
+          example: 30
+          minimum: 0
+          maximum: 86400000
         requirements:
           type: array
+          description: All requirements for all divisions
           items:
             type: object
+            description: Requirement for one division of the company
             properties:
               division:
                 type: string
+                description: Name of the division
               affectation:
                 type: string
+                description: Name of the affiliation
               needs:
                 type: array
+                description: 'All the needs (first one is at start time and others ones are at start + index * discretization)'
                 items:
                   $ref: '#/components/schemas/need'
-      required:
-        - discretization
   securitySchemes:
     'Bearer <api_key>':
       name: Authorization
