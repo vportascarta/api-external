@@ -13,7 +13,7 @@ servers:
 paths:
   /employee:
     get:
-      summary: Your GET endpoint
+      summary: GET employee
       tags: []
       responses:
         '200':
@@ -49,9 +49,10 @@ paths:
           name: companyCode
           description: The employee company (for multi company setup)
       description: Get one employee
+    parameters: []
   /employee/all:
     get:
-      summary: Your GET endpoint
+      summary: GET all employee
       tags: []
       responses:
         '200':
@@ -83,6 +84,123 @@ paths:
           in: query
           name: companyCode
           description: The employee company (for multi company setup)
+  /requirement:
+    get:
+      summary: GET requirement by day
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/requirement'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: string
+        '':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/requirement'
+          description: ''
+      operationId: get-requirement
+      security:
+        - Bearer c829bb26-8c08-4027-8f37-acdb9e224992: []
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: Date
+          description: Wanted day
+          required: true
+  /schedule:
+    get:
+      summary: GET employee schedule
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/schedule'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: string
+      operationId: get-schedule
+      security:
+        - Bearer c829bb26-8c08-4027-8f37-acdb9e224992: []
+      requestBody: {}
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: employeeId
+          description: Id of an valid employee
+          required: true
+        - schema:
+            type: string
+          in: query
+          name: companyCode
+          description: The employee company (for multi company setup)
+        - schema:
+            type: string
+          in: query
+          name: Date
+          description: One day of the wanted week
+      description: get the schedule (1 week) of one employee
+  /schedule/all:
+    get:
+      summary: GET all schedule
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/schedule'
+        '401':
+          description: ''
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: string
+      operationId: get-schedule-all
+      security:
+        - Bearer c829bb26-8c08-4027-8f37-acdb9e224992: []
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: companyCode
+          description: The employee company (for multi company setup)
+        - schema:
+            type: string
+          in: query
+          name: Date
+          description: One day of the wanted week
 components:
   schemas:
     employee:
