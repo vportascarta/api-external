@@ -122,10 +122,10 @@ paths:
           description: The employee company (for multi company setup)
         - schema:
             type: string
-            pattern: ISO Date
+            pattern: "^\\d{4}-([0]\\d|1[0-2])-([0-2]\\d|3[01])$"
           in: query
           name: date
-          description: One day of the wanted week
+          description: One day of the wanted week (ISO DATE)
           required: true
   /schedule:
     get:
@@ -168,10 +168,10 @@ paths:
           description: The employee company (for multi company setup)
         - schema:
             type: string
-            pattern: ISO Date
+            pattern: "^\\d{4}-([0]\\d|1[0-2])-([0-2]\\d|3[01])$"
           in: query
           name: date
-          description: One day of the wanted week
+          description: One day of the wanted week (ISO DATE)
           required: true
       description: get the schedule (1 week) of one employee
   /requirement:
@@ -209,10 +209,10 @@ paths:
       parameters:
         - schema:
             type: string
-            pattern: ISO Date
+            pattern: "^\\d{4}-([0]\\d|1[0-2])-([0-2]\\d|3[01])$"
           in: query
           name: date
-          description: Wanted day
+          description: Wanted day (ISO DATE)
           required: true
         - schema:
             type: string
@@ -290,21 +290,35 @@ components:
             - WEEKLY
         wage:
           type: number
-          format: double
+          format: float
+          example: '40'
           minimum: 0
+          maximum: 1000000
       required:
         - id
         - displayId
+        - wage
     need:
       title: Need
       type: object
+      x-tags:
+        - requirement
       properties:
         onSchedule:
           type: number
+          format: float
+          example: '2'
+          minimum: 0
+          maximum: 1000
         required:
           type: number
-      x-tags:
-        - requirement
+          format: float
+          example: '6'
+          minimum: 0
+          maximum: 1000
+      required:
+        - onSchedule
+        - required
     shift:
       title: Shift
       type: object
@@ -335,6 +349,8 @@ components:
     task:
       title: Task
       type: object
+      x-tags:
+        - schedule
       properties:
         name:
           type: string
@@ -347,12 +363,14 @@ components:
         duration:
           type: number
           description: milliseconds
+          format: float
+          example: '15'
+          minimum: 0
+          maximum: 86400000
         labels:
           type: array
           items:
             type: string
-      x-tags:
-        - schedule
     schedule:
       title: Schedule
       type: object
@@ -369,9 +387,16 @@ components:
       title: Requirement
       type: object
       description: ''
+      x-tags:
+        - requirement
       properties:
         discretization:
           type: number
+          description: millisseconds
+          format: float
+          example: '30'
+          minimum: 0
+          maximum: 86400000
         start:
           type: string
           format: date-time
@@ -388,8 +413,8 @@ components:
                 type: array
                 items:
                   $ref: '#/components/schemas/need'
-      x-tags:
-        - requirement
+      required:
+        - discretization
   securitySchemes:
     'Bearer <api_key>':
       name: Authorization
