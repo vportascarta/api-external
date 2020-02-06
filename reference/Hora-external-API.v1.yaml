@@ -13,8 +13,9 @@ servers:
 paths:
   /employee:
     get:
-      summary: GET employee
-      tags: []
+      summary: Get one employee
+      tags:
+        - employee
       responses:
         '200':
           description: OK
@@ -34,8 +35,7 @@ paths:
                 type: string
                 description: The error encountered by the server
       operationId: get-employee
-      security:
-        - Bearer c829bb26-8c08-4027-8f37-acdb9e224992: []
+      description: Get one employee
       parameters:
         - schema:
             type: string
@@ -48,12 +48,14 @@ paths:
           in: query
           name: companyCode
           description: The employee company (for multi company setup)
-      description: Get one employee
+      security:
+        - 'Bearer <api_key>': []
     parameters: []
   /employee/all:
     get:
-      summary: GET all employee
-      tags: []
+      summary: Get all employee
+      tags:
+        - employee
       responses:
         '200':
           description: OK
@@ -77,7 +79,7 @@ paths:
       operationId: get-employee-all
       description: Get all employees
       security:
-        - Bearer c829bb26-8c08-4027-8f37-acdb9e224992: []
+        - 'Bearer <api_key>': []
       parameters:
         - schema:
             type: string
@@ -86,8 +88,9 @@ paths:
           description: The employee company (for multi company setup)
   /schedule/all:
     get:
-      summary: GET all schedule
-      tags: []
+      summary: Get all schedule for one week
+      tags:
+        - schedule
       responses:
         '200':
           description: OK
@@ -110,7 +113,7 @@ paths:
                 description: The error encountered by the server
       operationId: get-schedule-all
       security:
-        - Bearer c829bb26-8c08-4027-8f37-acdb9e224992: []
+        - 'Bearer <api_key>': []
       parameters:
         - schema:
             type: string
@@ -126,8 +129,9 @@ paths:
           required: true
   /schedule:
     get:
-      summary: GET employee schedule
-      tags: []
+      summary: Get one employee schedule for one week
+      tags:
+        - schedule
       responses:
         '200':
           description: OK
@@ -148,7 +152,7 @@ paths:
                 description: The error encountered by the server
       operationId: get-schedule
       security:
-        - Bearer c829bb26-8c08-4027-8f37-acdb9e224992: []
+        - 'Bearer <api_key>': []
       requestBody: {}
       parameters:
         - schema:
@@ -172,8 +176,9 @@ paths:
       description: get the schedule (1 week) of one employee
   /requirement:
     get:
-      summary: GET requirement by day
-      tags: []
+      summary: Get requirement by day
+      tags:
+        - requirement
       responses:
         '200':
           description: OK
@@ -200,7 +205,7 @@ paths:
           description: ''
       operationId: get-requirement
       security:
-        - Bearer c829bb26-8c08-4027-8f37-acdb9e224992: []
+        - 'Bearer <api_key>': []
       parameters:
         - schema:
             type: string
@@ -219,30 +224,10 @@ components:
     employee:
       title: Employee
       type: object
-      x-examples:
-        Douglas Cross:
-          id: '001'
-          displayId: DC1
-          firstName: Douglas
-          lastName: Cross
-          hiringDate: '2012-07-05T00:00:00'
-          seniorityDate: '2010-08-13T14:24:37'
-          gender: M
-          status: HALF-TIME
-          affiliation: Lead
-          baseDivision: Montréal
-          address: 563 Ovfo View
-          homePhone: +999-310-593-5947
-          cellularPhone: +999-841-791-6081
-          email: dc@example.com
-          information: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sodales imperdiet ligula, ac maximus enim.'
-          externalId: '485'
-          skills:
-            - DEV
-            - MONTREAL
-          labels:
-            - 30H
+      x-examples: {}
       description: ''
+      x-tags:
+        - employee
       properties:
         id:
           type: string
@@ -306,8 +291,10 @@ components:
         wage:
           type: number
           format: double
+          minimum: 0
       required:
         - id
+        - displayId
     need:
       title: Need
       type: object
@@ -316,6 +303,8 @@ components:
           type: number
         required:
           type: number
+      x-tags:
+        - requirement
     shift:
       title: Shift
       type: object
@@ -341,6 +330,8 @@ components:
         - affectation
         - start
         - end
+      x-tags:
+        - schedule
     task:
       title: Task
       type: object
@@ -360,6 +351,8 @@ components:
           type: array
           items:
             type: string
+      x-tags:
+        - schedule
     schedule:
       title: Schedule
       type: object
@@ -370,6 +363,8 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/shift'
+      x-tags:
+        - schedule
     requirement:
       title: Requirement
       type: object
@@ -393,8 +388,10 @@ components:
                 type: array
                 items:
                   $ref: '#/components/schemas/need'
+      x-tags:
+        - requirement
   securitySchemes:
-    Bearer c829bb26-8c08-4027-8f37-acdb9e224992:
+    'Bearer <api_key>':
       name: Authorization
       type: apiKey
       in: header
