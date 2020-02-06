@@ -1,0 +1,189 @@
+openapi: 3.0.0
+info:
+  title: Hora external API
+  version: '1.0'
+  contact:
+    name: Timesphere
+    url: 'https://timesphere.com'
+    email: support@timesphere.com
+  description: Hora External API Docs
+servers:
+  - url: 'https://company.timesphere.com/rest'
+    description: REST Endpoint
+paths: {}
+components:
+  schemas:
+    employee:
+      title: Employee
+      type: object
+      x-examples:
+        Douglas Cross:
+          id: '001'
+          displayId: DC1
+          firstName: Douglas
+          lastName: Cross
+          hiringDate: '2012-07-05T00:00:00'
+          seniorityDate: '2010-08-13T14:24:37'
+          gender: M
+          status: HALF-TIME
+          affiliation: Lead
+          baseDivision: Montréal
+          address: 563 Ovfo View
+          homePhone: +999-310-593-5947
+          cellularPhone: +999-841-791-6081
+          email: dc@example.com
+          information: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sodales imperdiet ligula, ac maximus enim.'
+          externalId: '485'
+          skills:
+            - DEV
+            - MONTREAL
+          labels:
+            - 30H
+      description: ''
+      properties:
+        id:
+          type: string
+          description: System id
+        displayId:
+          type: string
+          description: Id displayed on screen
+        firstName:
+          type: string
+          description: ''
+        lastName:
+          type: string
+          description: ''
+        hiringDate:
+          type: string
+          format: date-time
+          description: ISO Date Time
+        seniorityDate:
+          type: string
+          format: date-time
+          description: ISO Date Time
+        gender:
+          type: string
+          enum:
+            - M
+            - F
+          description: ''
+        status:
+          type: string
+        affiliation:
+          type: string
+        baseDivision:
+          type: string
+        address:
+          type: string
+        homePhone:
+          type: string
+        cellularPhone:
+          type: string
+        email:
+          type: string
+          format: email
+        information:
+          type: string
+        externalId:
+          type: string
+          description: Id used with external systems
+        skills:
+          type: array
+          items:
+            type: string
+        labels:
+          type: array
+          items:
+            type: string
+      required:
+        - id
+    need:
+      title: Need
+      type: object
+      properties:
+        onSchedule:
+          type: number
+        required:
+          type: number
+    shift:
+      title: Shift
+      type: object
+      properties:
+        division:
+          type: string
+        affectation:
+          type: string
+        source:
+          type: string
+        start:
+          type: string
+          format: date-time
+        end:
+          type: string
+          format: date-time
+        tasks:
+          type: array
+          items:
+            $ref: '#/components/schemas/task'
+      required:
+        - division
+        - affectation
+        - start
+        - end
+    task:
+      title: Task
+      type: object
+      properties:
+        name:
+          type: string
+        start:
+          type: string
+          format: date-time
+        end:
+          type: string
+          format: date-time
+        duration:
+          type: number
+          description: milliseconds
+        labels:
+          type: array
+          items:
+            type: string
+    schedule:
+      title: Schedule
+      type: object
+      properties:
+        employeeId:
+          type: string
+        shifts:
+          type: array
+          items:
+            $ref: '#/components/schemas/shift'
+    requirement:
+      title: Requirement
+      type: object
+      description: ''
+      properties:
+        discretization:
+          type: number
+        start:
+          type: string
+          format: date-time
+        requirements:
+          type: array
+          items:
+            type: object
+            properties:
+              division:
+                type: string
+              affectation:
+                type: string
+              needs:
+                type: array
+                items:
+                  $ref: '#/components/schemas/need'
+  securitySchemes:
+    Bearer c829bb26-8c08-4027-8f37-acdb9e224992:
+      name: Authorization
+      type: apiKey
+      in: header
