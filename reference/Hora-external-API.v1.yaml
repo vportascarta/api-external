@@ -285,6 +285,14 @@ components:
           type: array
           items:
             type: string
+        wage:
+          type: number
+          format: double
+        wageType:
+          type: string
+          enum:
+            - HOURLY
+            - WEEKLY
       required:
         - id
     need:
