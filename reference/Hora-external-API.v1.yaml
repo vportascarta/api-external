@@ -290,7 +290,6 @@ components:
             - WEEKLY
         wage:
           type: number
-          format: float
           example: '40'
           minimum: 0
           maximum: 1000000
@@ -306,13 +305,11 @@ components:
       properties:
         onSchedule:
           type: number
-          format: float
           example: '2'
           minimum: 0
           maximum: 1000
         required:
           type: number
-          format: float
           example: '6'
           minimum: 0
           maximum: 1000
@@ -363,7 +360,6 @@ components:
         duration:
           type: number
           description: milliseconds
-          format: float
           example: '15'
           minimum: 0
           maximum: 86400000
@@ -393,7 +389,6 @@ components:
         discretization:
           type: number
           description: millisseconds
-          format: float
           example: '30'
           minimum: 0
           maximum: 86400000
