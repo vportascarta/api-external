@@ -121,6 +121,11 @@ paths:
           name: Date
           description: Wanted day
           required: true
+        - schema:
+            type: string
+          in: query
+          name: companyCode
+          description: The employee company (for multi company setup)
   /schedule:
     get:
       summary: GET employee schedule
@@ -163,6 +168,7 @@ paths:
           in: query
           name: Date
           description: One day of the wanted week
+          required: true
       description: get the schedule (1 week) of one employee
   /schedule/all:
     get:
@@ -201,6 +207,7 @@ paths:
           in: query
           name: Date
           description: One day of the wanted week
+          required: true
 components:
   schemas:
     employee:
