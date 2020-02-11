@@ -1,0 +1,648 @@
+{
+   "openapi": "3.0.0",
+   "info": {
+      "title": "Hora external API",
+      "version": "1.0",
+      "contact": {
+         "name": "Timesphere",
+         "url": "https://timesphere.com",
+         "email": "support@timesphere.com"
+      },
+      "description": "Hora External API Docs"
+   },
+   "servers": [
+      {
+         "url": "https://company.timesphere.com/rest",
+         "description": "REST Endpoint"
+      }
+   ],
+   "paths": {
+      "/employee": {
+         "get": {
+            "summary": "Get one employee",
+            "tags": [
+               "employee"
+            ],
+            "responses": {
+               "200": {
+                  "description": "OK",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref": "#/components/schemas/employee"
+                        }
+                     }
+                  }
+               },
+               "401": {
+                  "description": "Unauthorized"
+               },
+               "404": {
+                  "description": "Not Found"
+               },
+               "500": {
+                  "description": "Internal Server Error",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "type": "string",
+                           "description": "The error encountered by the server"
+                        }
+                     }
+                  }
+               }
+            },
+            "operationId": "get-employee",
+            "description": "Get one employee",
+            "parameters": [
+               {
+                  "schema": {
+                     "type": "string"
+                  },
+                  "in": "query",
+                  "name": "employeeId",
+                  "description": "Id of an valid employee",
+                  "required": true
+               },
+               {
+                  "schema": {
+                     "type": "string"
+                  },
+                  "in": "query",
+                  "name": "companyCode",
+                  "description": "The employee company (for multi company setup)"
+               }
+            ],
+            "security": [
+               {
+                  "Bearer <api_key>": []
+               }
+            ]
+         },
+         "parameters": []
+      },
+      "/employee/all": {
+         "get": {
+            "summary": "Get all employee",
+            "tags": [
+               "employee"
+            ],
+            "responses": {
+               "200": {
+                  "description": "OK",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "type": "array",
+                           "items": {
+                              "$ref": "#/components/schemas/employee"
+                           }
+                        }
+                     }
+                  }
+               },
+               "401": {
+                  "description": "Unauthorized"
+               },
+               "404": {
+                  "description": "Not Found"
+               },
+               "500": {
+                  "description": "Internal Server Error",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "type": "string",
+                           "description": "The error encountered by the server"
+                        }
+                     }
+                  }
+               }
+            },
+            "operationId": "get-employee-all",
+            "description": "Get all employees",
+            "security": [
+               {
+                  "Bearer <api_key>": []
+               }
+            ],
+            "parameters": [
+               {
+                  "schema": {
+                     "type": "string"
+                  },
+                  "in": "query",
+                  "name": "companyCode",
+                  "description": "The employee company (for multi company setup)"
+               }
+            ]
+         }
+      },
+      "/schedule/all": {
+         "get": {
+            "summary": "Get all schedule for one week",
+            "tags": [
+               "schedule"
+            ],
+            "responses": {
+               "200": {
+                  "description": "OK",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "type": "array",
+                           "items": {
+                              "$ref": "#/components/schemas/schedule"
+                           }
+                        }
+                     }
+                  }
+               },
+               "401": {
+                  "description": "Unauthorized"
+               },
+               "404": {
+                  "description": "Not Found"
+               },
+               "500": {
+                  "description": "Internal Server Error",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "type": "string",
+                           "description": "The error encountered by the server"
+                        }
+                     }
+                  }
+               }
+            },
+            "operationId": "get-schedule-all",
+            "security": [
+               {
+                  "Bearer <api_key>": []
+               }
+            ],
+            "parameters": [
+               {
+                  "schema": {
+                     "type": "string"
+                  },
+                  "in": "query",
+                  "name": "companyCode",
+                  "description": "The employee company (for multi company setup)"
+               },
+               {
+                  "schema": {
+                     "type": "string",
+                     "pattern": "^\\d{4}-([0]\\d|1[0-2])-([0-2]\\d|3[01])$"
+                  },
+                  "in": "query",
+                  "name": "date",
+                  "description": "One day of the wanted week (ISO DATE)",
+                  "required": true
+               }
+            ]
+         }
+      },
+      "/schedule": {
+         "get": {
+            "summary": "Get one employee schedule for one week",
+            "tags": [
+               "schedule"
+            ],
+            "responses": {
+               "200": {
+                  "description": "OK",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref": "#/components/schemas/schedule"
+                        }
+                     }
+                  }
+               },
+               "401": {
+                  "description": "Unauthorized"
+               },
+               "404": {
+                  "description": "Not Found"
+               },
+               "500": {
+                  "description": "Internal Server Error",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "type": "string",
+                           "description": "The error encountered by the server"
+                        }
+                     }
+                  }
+               }
+            },
+            "operationId": "get-schedule",
+            "security": [
+               {
+                  "Bearer <api_key>": []
+               }
+            ],
+            "parameters": [
+               {
+                  "schema": {
+                     "type": "string"
+                  },
+                  "in": "query",
+                  "name": "employeeId",
+                  "description": "Id of an valid employee",
+                  "required": true
+               },
+               {
+                  "schema": {
+                     "type": "string"
+                  },
+                  "in": "query",
+                  "name": "companyCode",
+                  "description": "The employee company (for multi company setup)"
+               },
+               {
+                  "schema": {
+                     "type": "string",
+                     "pattern": "^\\d{4}-([0]\\d|1[0-2])-([0-2]\\d|3[01])$"
+                  },
+                  "in": "query",
+                  "name": "date",
+                  "description": "One day of the wanted week (ISO DATE)",
+                  "required": true
+               }
+            ],
+            "description": "get the schedule (1 week) of one employee"
+         }
+      },
+      "/requirement": {
+         "get": {
+            "summary": "Get requirement by day",
+            "tags": [
+               "requirement"
+            ],
+            "responses": {
+               "200": {
+                  "description": "OK",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref": "#/components/schemas/requirement"
+                        }
+                     }
+                  }
+               },
+               "401": {
+                  "description": "Unauthorized"
+               },
+               "404": {
+                  "description": "Not Found"
+               },
+               "500": {
+                  "description": "Internal Server Error",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "type": "string",
+                           "description": "The error encountered by the server"
+                        }
+                     }
+                  }
+               }
+            },
+            "operationId": "get-requirement",
+            "security": [
+               {
+                  "Bearer <api_key>": []
+               }
+            ],
+            "parameters": [
+               {
+                  "schema": {
+                     "type": "string",
+                     "pattern": "^\\d{4}-([0]\\d|1[0-2])-([0-2]\\d|3[01])$"
+                  },
+                  "in": "query",
+                  "name": "date",
+                  "description": "Wanted day (ISO DATE)",
+                  "required": true
+               },
+               {
+                  "schema": {
+                     "type": "string"
+                  },
+                  "in": "query",
+                  "name": "companyCode",
+                  "description": "The employee company (for multi company setup)"
+               }
+            ]
+         }
+      }
+   },
+   "components": {
+      "schemas": {
+         "employee": {
+            "title": "Employee",
+            "type": "object",
+            "x-examples": {},
+            "description": "All information about an employee",
+            "x-tags": [
+               "employee"
+            ],
+            "properties": {
+               "id": {
+                  "type": "string",
+                  "description": "System id"
+               },
+               "displayId": {
+                  "type": "string",
+                  "description": "Id displayed on screen"
+               },
+               "firstName": {
+                  "type": "string",
+                  "description": "First name of the employee"
+               },
+               "lastName": {
+                  "type": "string",
+                  "description": "Last name of the employee"
+               },
+               "hiringDate": {
+                  "type": "string",
+                  "format": "date-time",
+                  "description": "Date when the employee was hired (ISO Date Time)"
+               },
+               "seniorityDate": {
+                  "type": "string",
+                  "format": "date-time",
+                  "description": "Date of seniority for the system automatic algorithm (ISO Date Time)"
+               },
+               "gender": {
+                  "type": "string",
+                  "enum": [
+                     "M",
+                     "F"
+                  ],
+                  "description": "Gender of the employee"
+               },
+               "status": {
+                  "type": "string",
+                  "description": "Status of the employee"
+               },
+               "affiliation": {
+                  "type": "string",
+                  "description": "Affiliation of the employee"
+               },
+               "baseDivision": {
+                  "type": "string",
+                  "description": "Base division (use to restrict admin views) of the employee"
+               },
+               "address": {
+                  "type": "string",
+                  "description": "Adress of the employee"
+               },
+               "homePhone": {
+                  "type": "string",
+                  "description": "Home or Work phone (internationnal format)"
+               },
+               "cellularPhone": {
+                  "type": "string",
+                  "description": "Cellular phone (internationnal format)"
+               },
+               "email": {
+                  "type": "string",
+                  "format": "email",
+                  "description": "Email of the employee"
+               },
+               "information": {
+                  "type": "string",
+                  "description": "Other information about the employee"
+               },
+               "externalId": {
+                  "type": "string",
+                  "description": "Id used with external systems"
+               },
+               "skills": {
+                  "type": "array",
+                  "items": {
+                     "type": "string"
+                  },
+                  "description": "List of skills that the employee have"
+               },
+               "labels": {
+                  "type": "array",
+                  "items": {
+                     "type": "string"
+                  },
+                  "description": "List of labels that the employee have"
+               },
+               "wageType": {
+                  "type": "string",
+                  "enum": [
+                     "HOURLY",
+                     "WEEKLY"
+                  ],
+                  "description": "Unit of the wage"
+               },
+               "wage": {
+                  "type": "number",
+                  "example": 40,
+                  "minimum": 0,
+                  "maximum": 1000000,
+                  "description": "Wage of the employee"
+               }
+            },
+            "required": [
+               "id",
+               "displayId",
+               "wage"
+            ]
+         },
+         "need": {
+            "title": "Need",
+            "type": "object",
+            "x-tags": [
+               "requirement"
+            ],
+            "properties": {
+               "onSchedule": {
+                  "type": "number",
+                  "example": 2,
+                  "minimum": 0,
+                  "maximum": 1000,
+                  "description": "Number of ressources already on schedule"
+               },
+               "required": {
+                  "type": "number",
+                  "example": 6,
+                  "minimum": 0,
+                  "maximum": 1000,
+                  "description": "Number of ressources required for this period"
+               }
+            },
+            "required": [
+               "onSchedule",
+               "required"
+            ],
+            "description": "A \"need\" is a number of ressources needed in a period of time"
+         },
+         "shift": {
+            "title": "Shift",
+            "type": "object",
+            "x-tags": [
+               "schedule"
+            ],
+            "properties": {
+               "division": {
+                  "type": "string",
+                  "description": "Division of the shift"
+               },
+               "affectation": {
+                  "type": "string",
+                  "description": "Affectation of the shift"
+               },
+               "source": {
+                  "type": "string",
+                  "description": "Source of the shift (used to know the origin of the shift)"
+               },
+               "start": {
+                  "type": "string",
+                  "format": "date-time",
+                  "description": "Start of the shift (ISO Date Time)"
+               },
+               "end": {
+                  "type": "string",
+                  "format": "date-time",
+                  "description": "End of the shift (ISO Date Time)"
+               },
+               "tasks": {
+                  "type": "array",
+                  "description": "Tasks linked to the shift",
+                  "items": {
+                     "$ref": "#/components/schemas/task"
+                  }
+               }
+            },
+            "required": [
+               "division",
+               "affectation",
+               "start",
+               "end"
+            ]
+         },
+         "task": {
+            "title": "Task",
+            "type": "object",
+            "x-tags": [
+               "schedule"
+            ],
+            "properties": {
+               "name": {
+                  "type": "string",
+                  "description": "Name of the task"
+               },
+               "start": {
+                  "type": "string",
+                  "format": "date-time",
+                  "description": "Start of the task (ISO Date Time)"
+               },
+               "end": {
+                  "type": "string",
+                  "format": "date-time",
+                  "description": "Start of the task (ISO Date Time)"
+               },
+               "duration": {
+                  "type": "number",
+                  "description": "Duration of the task in milliseconds",
+                  "example": 15,
+                  "minimum": 0,
+                  "maximum": 86400000
+               },
+               "labels": {
+                  "type": "array",
+                  "description": "List of labels linked to the task",
+                  "items": {
+                     "type": "string"
+                  }
+               }
+            }
+         },
+         "schedule": {
+            "title": "Schedule",
+            "type": "object",
+            "x-tags": [
+               "schedule"
+            ],
+            "description": "A schedule of an employee",
+            "properties": {
+               "employeeId": {
+                  "type": "string",
+                  "description": "Id of the employee"
+               },
+               "shifts": {
+                  "type": "array",
+                  "description": "All the shifts for this employee",
+                  "items": {
+                     "$ref": "#/components/schemas/shift"
+                  }
+               }
+            }
+         },
+         "requirement": {
+            "title": "Requirement",
+            "type": "object",
+            "description": "Discribe a requirement for one day",
+            "x-tags": [
+               "requirement"
+            ],
+            "properties": {
+               "start": {
+                  "type": "string",
+                  "format": "date-time",
+                  "description": "Start date of the requirement"
+               },
+               "discretization": {
+                  "type": "number",
+                  "description": "Duration of one period in milliseconds",
+                  "example": 30,
+                  "minimum": 0,
+                  "maximum": 86400000
+               },
+               "requirements": {
+                  "type": "array",
+                  "description": "All requirements for all divisions",
+                  "items": {
+                     "type": "object",
+                     "description": "Requirement for one division of the company",
+                     "properties": {
+                        "division": {
+                           "type": "string",
+                           "description": "Name of the division"
+                        },
+                        "affectation": {
+                           "type": "string",
+                           "description": "Name of the affiliation"
+                        },
+                        "needs": {
+                           "type": "array",
+                           "description": "All the needs (first one is at start time and others ones are at start + index * discretization)",
+                           "items": {
+                              "$ref": "#/components/schemas/need"
+                           }
+                        }
+                     }
+                  }
+               }
+            }
+         }
+      },
+      "securitySchemes": {
+         "Bearer <api_key>": {
+            "name": "Authorization",
+            "type": "apiKey",
+            "in": "header"
+         }
+      }
+   }
+}
