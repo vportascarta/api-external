@@ -13,7 +13,7 @@ servers:
   - url: 'https://company.timesphere.com/rest/v1'
     description: REST Endpoint
 paths:
-  /employee:
+  '/employee/{employeeId}':
     get:
       summary: Get one employee
       tags:
@@ -101,18 +101,18 @@ paths:
         - schema:
             type: string
           in: query
-          name: employeeId
-          description: Id of an valid employee
-          required: true
-        - schema:
-            type: string
-          in: query
-          name: companyCode
-          description: The employee company (for multi company setup)
+          name: succursaleCode
+          description: The employee succursale (for multi succursale setup)
       security:
         - Rest user configured: []
-    parameters: []
-  /employee/all:
+    parameters:
+      - schema:
+          type: string
+        name: employeeId
+        in: path
+        required: true
+        description: Id of a valid employee
+  /employee:
     get:
       summary: Get all employee
       tags:
@@ -204,9 +204,10 @@ paths:
         - schema:
             type: string
           in: query
-          name: companyCode
-          description: The employee company (for multi company setup)
-  /schedule/all:
+          name: succursaleCode
+          description: The employee succursale (for multi succursale setup)
+    parameters: []
+  /schedule/week:
     get:
       summary: Get all schedules for one week
       tags:
@@ -297,17 +298,18 @@ paths:
         - schema:
             type: string
           in: query
-          name: companyCode
-          description: The employee company (for multi company setup)
+          name: succursaleCode
+          description: The employee succursale (for multi succursale setup)
         - schema:
             type: string
             pattern: "^\\d{4}-([0]\\d|1[0-2])-([0-2]\\d|3[01])$"
           in: query
           name: date
-          description: One day of the wanted week (ISO DATE)
+          description: 'One day of the wanted week (ISO DATE) ex : 2020-01-31'
           required: true
       description: Get all schedules for one week
-  /schedule:
+    parameters: []
+  '/schedule/week/{employeeId}':
     get:
       summary: Get one employee schedule for one week
       tags:
@@ -396,22 +398,23 @@ paths:
         - schema:
             type: string
           in: query
-          name: employeeId
-          description: Id of an valid employee
-          required: true
-        - schema:
-            type: string
-          in: query
-          name: companyCode
-          description: The employee company (for multi company setup)
+          name: succursaleCode
+          description: The employee succursale (for multi succursale setup)
         - schema:
             type: string
             pattern: "^\\d{4}-([0]\\d|1[0-2])-([0-2]\\d|3[01])$"
           in: query
           name: date
-          description: One day of the wanted week (ISO DATE)
+          description: 'One day of the wanted week (ISO DATE) ex : 2020-01-31'
           required: true
       description: get the schedule (1 week) of one employee
+    parameters:
+      - schema:
+          type: string
+        name: employeeId
+        in: path
+        required: true
+        description: Id of a valid employee
   /requirement:
     get:
       summary: Get requirements by day
@@ -503,13 +506,13 @@ paths:
             pattern: "^\\d{4}-([0]\\d|1[0-2])-([0-2]\\d|3[01])$"
           in: query
           name: date
-          description: Wanted day (ISO DATE)
+          description: 'Wanted day (ISO DATE) ex : 2020-01-31'
           required: true
         - schema:
             type: string
           in: query
-          name: companyCode
-          description: The employee company (for multi company setup)
+          name: succursaleCode
+          description: The employee succursale (for multi succursale setup)
       description: Get all requirements by day
   /hierarchy:
     get:
@@ -601,8 +604,8 @@ paths:
         - schema:
             type: string
           in: query
-          name: companyCode
-          description: The employee company (for multi company setup)
+          name: succursaleCode
+          description: The employee succursale (for multi succursale setup)
 components:
   schemas:
     employee:
@@ -719,6 +722,7 @@ components:
       type: object
       x-tags:
         - schedule
+      description: 'Discribe a period with information attached to it (division-affectation, source, task)'
       properties:
         divisionId:
           type: string
@@ -729,6 +733,9 @@ components:
         source:
           type: string
           description: Source of the shift (used to know the origin of the shift)
+        assignationSource:
+          type: string
+          description: Source of the assignation (used to know the origin of the assignation)
         start:
           type: string
           format: date-time
@@ -747,7 +754,6 @@ components:
         - affectationId
         - start
         - end
-      description: 'Discribe a period with information attached to it (division-affectation, source, task)'
     task:
       title: Task
       type: object
@@ -809,7 +815,7 @@ components:
         discretization:
           type: number
           description: Duration of one period in milliseconds
-          example: 30
+          example: '1800000'
           minimum: 0
           maximum: 86400000
         requirements:
