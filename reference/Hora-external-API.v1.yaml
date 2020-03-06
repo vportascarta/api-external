@@ -391,6 +391,7 @@ components:
         - affectationId
         - start
         - end
+      description: 'Discribe a period with information attached to it (division-affectation, source, task)'
     task:
       title: Task
       type: object
@@ -419,12 +420,13 @@ components:
           description: List of labels linked to the task
           items:
             type: string
+      description: A task is a thing to do with a shift
     schedule:
       title: Schedule
       type: object
       x-tags:
         - schedule
-      description: A schedule of an employee
+      description: A schedule of an employee (list of shifts)
       properties:
         employeeId:
           type: string
@@ -476,7 +478,7 @@ components:
         - start
         - discretization
     hierarchy:
-      title: hierarchy
+      title: Hierarchy
       type: object
       description: All information about the company hierarchy
       x-tags:
@@ -498,7 +500,7 @@ components:
           items:
             $ref: '#/components/schemas/divisionaffectation'
     division:
-      title: division
+      title: Division
       type: object
       x-tags:
         - hierarchy
@@ -550,7 +552,7 @@ components:
         - displayName
       description: All information about a division
     affectation:
-      title: affectation
+      title: Affectation
       type: object
       description: All information about an affectation
       x-tags:
@@ -619,9 +621,9 @@ components:
         - salary
         - active
     divisionaffectation:
-      title: divisionaffectation
+      title: Division-Affectation
       type: object
-      description: All information about an affectation attached to a division
+      description: All information about an affectation attached to a division. This can be assigned to an employee in a shift.
       x-tags:
         - hierarchy
       properties:
