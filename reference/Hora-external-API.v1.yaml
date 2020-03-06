@@ -692,7 +692,6 @@ components:
       required:
         - id
         - displayId
-        - wage
     need:
       title: Need
       type: object
@@ -993,7 +992,7 @@ components:
         - divisionId
         - affectationId
     error:
-      title: error
+      title: Error
       type: object
       description: Model for error response
       properties:
