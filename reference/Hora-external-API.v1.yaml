@@ -7,8 +7,10 @@ info:
     url: 'https://timesphere.com'
     email: support@timesphere.com
   description: Hora External API Docs
+  license:
+    name: Private license
 servers:
-  - url: 'https://company.timesphere.com/rest'
+  - url: 'https://company.timesphere.com/rest/v1'
     description: REST Endpoint
 paths:
   /employee:
@@ -49,7 +51,7 @@ paths:
           name: companyCode
           description: The employee company (for multi company setup)
       security:
-        - 'Bearer <api_key>': []
+        - Rest user configured: []
     parameters: []
   /employee/all:
     get:
@@ -79,7 +81,7 @@ paths:
       operationId: get-employee-all
       description: Get all employees
       security:
-        - 'Bearer <api_key>': []
+        - Rest user configured: []
       parameters:
         - schema:
             type: string
@@ -113,7 +115,7 @@ paths:
                 description: The error encountered by the server
       operationId: get-schedule-all
       security:
-        - 'Bearer <api_key>': []
+        - Rest user configured: []
       parameters:
         - schema:
             type: string
@@ -153,7 +155,7 @@ paths:
                 description: The error encountered by the server
       operationId: get-schedule
       security:
-        - 'Bearer <api_key>': []
+        - Rest user configured: []
       parameters:
         - schema:
             type: string
@@ -199,7 +201,7 @@ paths:
                 description: The error encountered by the server
       operationId: get-requirement
       security:
-        - 'Bearer <api_key>': []
+        - Rest user configured: []
       parameters:
         - schema:
             type: string
@@ -239,7 +241,7 @@ paths:
       operationId: get-hierarchy
       description: Get all hierarchy
       security:
-        - 'Bearer <api_key>': []
+        - Rest user configured: []
       parameters:
         - schema:
             type: string
@@ -636,10 +638,9 @@ components:
         - divisionId
         - affectationId
   securitySchemes:
-    'Bearer <api_key>':
-      name: Authorization
-      type: apiKey
-      in: header
+    Rest user configured:
+      type: http
+      scheme: basic
 tags:
   - name: employee
   - name: hierarchy
