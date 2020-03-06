@@ -24,18 +24,77 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/employee'
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/employee'
+                  timestamp:
+                    type: string
+                    format: date-time
+                    description: Date of request
+                  additionnalInfo:
+                    type: object
+                    description: Additionnal client specific information
+                required:
+                  - data
+                  - timestamp
         '401':
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/error'
+                  timestamp:
+                    type: string
+                    format: date-time
+                    description: Date of request
+                  additionnalInfo:
+                    type: object
+                    description: Additionnal client specific information
+                required:
+                  - data
+                  - timestamp
         '404':
           description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/error'
+                  timestamp:
+                    type: string
+                    format: date-time
+                    description: Date of request
+                  additionnalInfo:
+                    type: object
+                    description: Additionnal client specific information
+                required:
+                  - data
+                  - timestamp
         '500':
           description: Internal Server Error
           content:
             application/json:
               schema:
-                type: string
-                description: The error encountered by the server
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/error'
+                  timestamp:
+                    type: string
+                    format: date-time
+                    description: Date of request
+                  additionnalInfo:
+                    type: object
+                    description: Additionnal client specific information
+                required:
+                  - data
+                  - timestamp
       operationId: get-employee
       description: Get one employee
       parameters:
@@ -64,20 +123,79 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/employee'
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/employee'
+                  timestamp:
+                    type: string
+                    format: date-time
+                    description: Date of request
+                  additionnalInfo:
+                    type: object
+                    description: Additionnal client specific information
+                required:
+                  - data
+                  - timestamp
         '401':
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/error'
+                  timestamp:
+                    type: string
+                    format: date-time
+                    description: Date of request
+                  additionnalInfo:
+                    type: object
+                    description: Additionnal client specific information
+                required:
+                  - data
+                  - timestamp
         '404':
           description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/error'
+                  timestamp:
+                    type: string
+                    format: date-time
+                    description: Date of request
+                  additionnalInfo:
+                    type: object
+                    description: Additionnal client specific information
+                required:
+                  - data
+                  - timestamp
         '500':
           description: Internal Server Error
           content:
             application/json:
               schema:
-                type: string
-                description: The error encountered by the server
+                type: object
+                required:
+                  - data
+                  - timestamp
+                properties:
+                  data:
+                    $ref: '#/components/schemas/error'
+                  timestamp:
+                    type: string
+                    format: date-time
+                    description: Date of request
+                  additionnalInfo:
+                    type: object
+                    description: Additionnal client specific information
       operationId: get-employee-all
       description: Get all employees
       security:
@@ -99,20 +217,79 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/schedule'
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/schedule'
+                  timestamp:
+                    type: string
+                    format: date-time
+                    description: Date of request
+                  additionnalInfo:
+                    type: object
+                    description: Additionnal client specific information
+                required:
+                  - data
+                  - timestamp
         '401':
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/error'
+                  timestamp:
+                    type: string
+                    format: date-time
+                    description: Date of request
+                  additionnalInfo:
+                    type: object
+                    description: Additionnal client specific information
+                required:
+                  - data
+                  - timestamp
         '404':
           description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/error'
+                  timestamp:
+                    type: string
+                    format: date-time
+                    description: Date of request
+                  additionnalInfo:
+                    type: object
+                    description: Additionnal client specific information
+                required:
+                  - data
+                  - timestamp
         '500':
           description: Internal Server Error
           content:
             application/json:
               schema:
-                type: string
-                description: The error encountered by the server
+                type: object
+                required:
+                  - data
+                  - timestamp
+                properties:
+                  data:
+                    $ref: '#/components/schemas/error'
+                  timestamp:
+                    type: string
+                    format: date-time
+                    description: Date of request
+                  additionnalInfo:
+                    type: object
+                    description: Additionnal client specific information
       operationId: get-schedule-all
       security:
         - Rest user configured: []
@@ -141,18 +318,77 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/schedule'
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/schedule'
+                  timestamp:
+                    type: string
+                    format: date-time
+                    description: Date of request
+                  additionnalInfo:
+                    type: object
+                    description: Additionnal client specific information
+                required:
+                  - data
+                  - timestamp
         '401':
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/error'
+                  timestamp:
+                    type: string
+                    format: date-time
+                    description: Date of request
+                  additionnalInfo:
+                    type: object
+                    description: Additionnal client specific information
+                required:
+                  - data
+                  - timestamp
         '404':
           description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/error'
+                  timestamp:
+                    type: string
+                    format: date-time
+                    description: Date of request
+                  additionnalInfo:
+                    type: object
+                    description: Additionnal client specific information
+                required:
+                  - data
+                  - timestamp
         '500':
           description: Internal Server Error
           content:
             application/json:
               schema:
-                type: string
-                description: The error encountered by the server
+                type: object
+                required:
+                  - data
+                  - timestamp
+                properties:
+                  data:
+                    $ref: '#/components/schemas/error'
+                  timestamp:
+                    type: string
+                    format: date-time
+                    description: Date of request
+                  additionnalInfo:
+                    type: object
+                    description: Additionnal client specific information
       operationId: get-schedule
       security:
         - Rest user configured: []
@@ -187,18 +423,77 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/requirement'
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/requirement'
+                  timestamp:
+                    type: string
+                    format: date-time
+                    description: Date of request
+                  additionnalInfo:
+                    type: object
+                    description: Additionnal client specific information
+                required:
+                  - data
+                  - timestamp
         '401':
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/error'
+                  timestamp:
+                    type: string
+                    format: date-time
+                    description: Date of request
+                  additionnalInfo:
+                    type: object
+                    description: Additionnal client specific information
+                required:
+                  - data
+                  - timestamp
         '404':
           description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/error'
+                  timestamp:
+                    type: string
+                    format: date-time
+                    description: Date of request
+                  additionnalInfo:
+                    type: object
+                    description: Additionnal client specific information
+                required:
+                  - data
+                  - timestamp
         '500':
           description: Internal Server Error
           content:
             application/json:
               schema:
-                type: string
-                description: The error encountered by the server
+                type: object
+                required:
+                  - data
+                  - timestamp
+                properties:
+                  data:
+                    $ref: '#/components/schemas/error'
+                  timestamp:
+                    type: string
+                    format: date-time
+                    description: Date of request
+                  additionnalInfo:
+                    type: object
+                    description: Additionnal client specific information
       operationId: get-requirement
       security:
         - Rest user configured: []
@@ -227,17 +522,77 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/hierarchy'
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/hierarchy'
+                  timestamp:
+                    type: string
+                    format: date-time
+                    description: Date of request
+                  additionnalInfo:
+                    type: object
+                    description: Additionnal client specific information
+                required:
+                  - data
+                  - timestamp
         '401':
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/error'
+                  timestamp:
+                    type: string
+                    format: date-time
+                    description: Date of request
+                  additionnalInfo:
+                    type: object
+                    description: Additionnal client specific information
+                required:
+                  - data
+                  - timestamp
         '404':
           description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/error'
+                  timestamp:
+                    type: string
+                    format: date-time
+                    description: Date of request
+                  additionnalInfo:
+                    type: object
+                    description: Additionnal client specific information
+                required:
+                  - data
+                  - timestamp
         '500':
           description: Internal Server Error
           content:
             application/json:
               schema:
-                type: string
+                type: object
+                required:
+                  - data
+                  - timestamp
+                properties:
+                  data:
+                    $ref: '#/components/schemas/error'
+                  timestamp:
+                    type: string
+                    format: date-time
+                    description: Date of request
+                  additionnalInfo:
+                    type: object
+                    description: Additionnal client specific information
       operationId: get-hierarchy
       description: Get all hierarchy
       security:
@@ -637,6 +992,24 @@ components:
       required:
         - divisionId
         - affectationId
+    error:
+      title: error
+      type: object
+      description: Model for error response
+      properties:
+        code:
+          type: string
+          description: Error code for debugging
+        message:
+          type: string
+          description: Error message to display
+        fields:
+          type: array
+          description: List of bad parameters
+          items:
+            type: string
+      required:
+        - code
   securitySchemes:
     Rest user configured:
       type: http
