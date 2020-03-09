@@ -646,9 +646,9 @@ components:
         affiliation:
           type: string
           description: Affiliation of the employee
-        baseDivision:
+        baseDivisionId:
           type: string
-          description: Base division (use to restrict admin views) of the employee
+          description: Id of the base division (use to restrict admin views) of the employee
         address:
           type: string
           description: Adress of the employee
