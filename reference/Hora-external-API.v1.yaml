@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
   title: Hora external API
-  version: '1.0'
+  version: 1.0.1
   contact:
     name: Timesphere
     url: 'https://timesphere.com'
@@ -720,38 +720,24 @@ components:
       type: object
       x-tags:
         - schedule
-      description: 'Discribe a period with information attached to it (division-affectation, source, task)'
+      description: 'Discribe a period with information attached to it (assignations, source, task)'
       properties:
-        divisionId:
-          type: string
-          description: Division of the shift
-        affectationId:
-          type: string
-          description: Affectation of the shift
+        assignations:
+          type: array
+          description: List of assignation
+          items:
+            $ref: '#/components/schemas/assignation'
         source:
           type: string
           description: Source of the shift (used to know the origin of the shift)
         assignationSource:
           type: string
           description: Source of the assignation (used to know the origin of the assignation)
-        start:
-          type: string
-          format: date-time
-          description: Start of the shift (ISO Date Time)
-        end:
-          type: string
-          format: date-time
-          description: End of the shift (ISO Date Time)
         tasks:
           type: array
           description: Tasks linked to the shift
           items:
             $ref: '#/components/schemas/task'
-      required:
-        - divisionId
-        - affectationId
-        - start
-        - end
     task:
       title: Task
       type: object
@@ -1013,6 +999,27 @@ components:
             type: string
       required:
         - code
+    assignation:
+      title: Assignation
+      type: object
+      description: One element in a shift
+      properties:
+        end:
+          type: string
+          format: date-time
+          description: End of the assignation (ISO Date Time)
+        start:
+          type: string
+          format: date-time
+          description: Start of the assignation (ISO Date Time)
+        affectationId:
+          type: string
+          description: Affectation of the assignation
+        divisionId:
+          type: string
+          description: Division of the assignation
+      x-tags:
+        - schedule
   securitySchemes:
     Rest user configured:
       type: http
