@@ -10,7 +10,7 @@ info:
   license:
     name: Private license
 servers:
-  - url: 'https://company.timesphere.com/rest/v1'
+  - url: 'https://current.timesphere.com/rest/v1'
     description: REST Endpoint
 paths:
   '/employee/{employeeId}':
